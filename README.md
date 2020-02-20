@@ -9,11 +9,17 @@ Comments: Unfortunately, the designed turned out to be unbalanced since for thre
 
 File “ultimate_igg-areas-20150417.xlsx”
 ◦ Plate – plate identifier
+
 ◦ labPerson – identifier for the analysts preparing a plate
+
 ◦ labPeriod – identifier for the month (time) of plate prepration
+
 ◦ gid – Genos id for the analyzed samples
+
 ◦ Low intensity (by feeling) – denotes if the analysts doing the QC on chromatograms noticed that the intensities for a sample were smaller than he is accustomed to see – these samples pass the QC
+
 ◦ Weird chromatogram - denotes if the analysts doing the QC on chromatograms noticed that the chromatograms for a sample were different than he is accustomed to see – these samples can pass the first step of the QC but the person doing the later (statistical) analysis on these samples should be aware that the problem exists and should discarded them if they&#39;re making problems during the analysis
+
 ◦ Splitted peaks/very bad chr – denotes if the analysts doing the QC on
 chromatograms finds the results for a sample really bad – these samples are not fit
 to pass the QC
