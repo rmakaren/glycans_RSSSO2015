@@ -2,8 +2,9 @@
 
 # Ultimate IgG test
 
-Goal: Locating sources of variation, exploring experimental variation, benchmark set for batch correction and normalization procedures development, exploring the stability of IgG Experiment description: Blood samples have been taken from 10 people (5 males and 5 females, approximately matched by age) during three time periods (day 1, day 2 and day 9). From these samples 3 plates were prepared by three different lab analysts (labPerson) in month 1 (labPeriod==1) and 3 more plates were prepared by the same lab analysts a month later (labPeriod==2). Therefore, accounting for variability coming from different analysts
-preparing the samples and for the time between the preparation of plates during an experiment with many plates. All plates had the same (randomized layout) containing IgG samples in triplicates and additional 14 standards (Genos internal standards). Hence, the analysts had to prepare the same plates.
+Goal: Locating sources of variation, exploring experimental variation, benchmark set for batch correction and normalization procedures development, exploring the stability of IgG 
+
+Experiment description: Blood samples have been taken from 10 people (5 males and 5 females, approximately matched by age) during three time periods (day 1, day 2 and day 9). From these samples 3 plates were prepared by three different lab analysts (labPerson) in month 1 (labPeriod==1) and 3 more plates were prepared by the same lab analysts a month later (labPeriod==2). Therefore, accounting for variability coming from different analysts preparing the samples and for the time between the preparation of plates during an experiment with many plates. All plates had the same (randomized layout) containing IgG samples in triplicates and additional 14 standards (Genos internal standards). Hence, the analysts had to prepare the same plates.
 
 Comments: Unfortunately, the designed turned out to be unbalanced since for three people blood samples from one day are missing. However, this should only affect the longitudinal study of the stability of IgG. Description of the data (tables):
 
