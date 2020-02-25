@@ -2,7 +2,7 @@
 
 Glycomics data is characterised by big variation originated from both natural factors (as age, gender, ethnics and others)
 and from different batch effects (sample replication, individual preformance, experiment design etc.). Therefore, the choose of
-proper statistical tool for data preprocessing, (as randomisation and normalisartion) is essential for correct analysis
+proper statistical tool for data preprocessing, (as randomisation and normalisartion) is essential for correct analysis and
 interpretation of the results.
 
 There are three projects from this hackathon. The first project analyses the variance within the glycoproteins level 
