@@ -2,7 +2,7 @@
 
 Glycomics data is characterised by big variation originated from both natural factors (as age, gender, ethnics and others) and different batch effects (sample replication, individual performance, experiment design etc.). Therefore, the choice of proper statistical tool for data preprocessing, (as randomisation and normalization) is essential for correct analysis and interpretation of the results.
 
-This repository represent preliminary analysis. For the final output please refer to the publication and their source code (Hae-Won Uh et. al 2020, DOI: 10.1039/C9MO00174C). There are three projects from this RSSSO2015 hackathon. The first project analyses the variance within the glycoproteins level measured from blood plasma and performs the randomisation and blocking technics.
+This repository represents preliminary analysis. For the final output please refer to the publication and their source code (Hae-Won Uh et. al 2020, DOI: 10.1039/C9MO00174C). There are three projects from this RSSSO2015 hackathon. The first project analyses the variance within the glycoproteins level measured from blood plasma and performs the randomisation and blocking technics.
 
 The second project investigates the most sufficient normalization technic for proteins separated on the 2D gels.
 
