@@ -1,61 +1,80 @@
+library(tidyverse)
+library(naniar)
+
+setwd()
+
 ## Project work
-df <- read.csv("plasma.csv")
-View(df)
+df <- read.csv("00-scripts-data/data/plasma.csv", stringsAsFactors = T)
+
+#########
+# 1. EDA
+#########
 
 #Ethnic 
 factor(df$ethnic) # df contains only information about white people
-length(df$"ethnic")
-sum(is.na(df$"ethnic")) # number of NA data 10 times more that present
+length(df$ethnic)
+sum(is.na(df$ethnic)) # number of NA data 10 times more that present
 
 # gender
-table(df$"gender") # number of females is 10 times greater males
-tapply(df$gender, df$Plate, table)
-library(dplyr)
+table(df$gender) # number of females is 10 times greater males
+table(df$gender, df$Plate)
 
-#plate
-df_Plate <- table(df$Plate)
-length(table(df$Plate)) #31 Plates
-
-#Creating boxplot graphics for each glycans gender vs GP
-pdf(file="GP_vs_Plates.pdf")
+# Visualizing every glycans by plate
+pdf(file="01-Plasma_block_rand/EDA/GP_vs_Plates.pdf")
 glycans <- grep("GP", names(df), value=TRUE)
 
 for(glycan in glycans){
   boxplot(df[[glycan]] ~ df$Plate,
-          main=glycan)
+          main=glycan,
+          xlab = "plate",
+          ylab = "glycan expression")
 }
 dev.off()
 
 #Creating boxplot graphics for each glycans gender vs GP
-pdf(file="GP_vs_age.pdf")
+pdf(file="01-Plasma_block_rand/EDA/GP_vs_age.pdf")
 glycans <- grep("GP", names(df), value=TRUE)
 
 for(glycan in glycans){
   boxplot(df[[glycan]] ~ df$age,
-          main=glycan)
+          data = df,
+          main=glycan,
+          xlab = "age",
+          ylab = "glycan expression")
 }
 dev.off()
 
-# removing males (evolutoinally males are not nessesary)
+# removing males 
 sub_df <- subset(df, gender == "F")
 
-pdf(file="age_vs_Plates.pdf")
-boxplot(df$age ~ df$Plate)
+pdf(file="01-Plasma_block_rand/EDA/age_vs_Plates.pdf")
+boxplot(df$age ~ df$Plate,
+        xlab = "plate",
+        ylab = "age")
 dev.off()
 
-pdf(file="age_vs_Plates(no_males).pdf")
-boxplot(sub_df$age ~ sub_df$Plate)
+pdf(file="01-Plasma_block_rand/EDA/age_vs_Plates(no_males).pdf")
+boxplot(sub_df$age ~ sub_df$Plate,
+        xlab = "plate",
+        ylab = "age")
 dev.off()
 
-#Blocking and randomisation by gender and age
+####################################
+# 2. Blocking and randomization
+####################################
 
+#Blocking and randomization by gender and age
 df_f <- df[df$gender == "F", ] # selected by Females
 df_f <- df_f[order(df_f$age),] # sorted by age in Females dataframe
 a = rep(seq(1:31), 42)[1:1278] # created sequence of 31 plates for 42 samples
 nrow(df_f)
 length(a)
 df_f$new_plate = a # assign new plates
-boxplot(df_f$age~df_f$new_plate)
+
+pdf(file="01-Plasma_block_rand/Block_rand/age_vs_Plates(F)_newplate.pdf")
+boxplot(age~new_plate, 
+        data = df_f)
+dev.off()
 
 df_m <- df[df$gender == "M", ] # selected by Males
 df_m <- df_m[order(df_m$age),] # sorted by age in Males dataframe
@@ -63,19 +82,25 @@ a = rep(seq(1:31), 4)[1:114] # created sequence of 31 plates for 4 samples
 nrow(df_m)
 length(a)
 df_m$new_plate = a # assign new plates
-boxplot(df_m$age~df_m$new_plate)
 
+pdf(file="01-Plasma_block_rand/Block_rand/age_vs_Plates(M)_newplate.pdf")
+boxplot(age ~ new_plate,
+        data = df_m)
+dev.off()
+
+pdf(file="01-Plasma_block_rand/Block_rand/age_vs_Plates(Total)_newplate.pdf")
 df_new <- rbind(df_f, df_m)
-boxplot(df_new$age~df_new$new_plate)
+boxplot(age~new_plate,
+        data=df_new)
+dev.off()
 
-?sample
+##################################################
+# 3. Making experiment design again: replication
+##################################################
 
-# Making experiment design again
-# replication
+df <- read.csv("/media/rostyslav/Toshiba/Projects/RSSSO_glycans/data/plasma.csv")
 
-df <- read.csv("plasma.csv")
-
-0.1 * 1392 # 10% from orign dataframe is 140
+0.1 * 1392 # 10% from original dataframe is 140
 
 L<-list()
 nrep <- 1000
@@ -84,7 +109,7 @@ for(ind in 1:nrep){
   tmp <- sample (1:nrow(df), size = 140, replace = FALSE) # randomly pick up 140 samples
   dupl  <- df[tmp,] # duplicate picked samples
   dupl$gid <- paste0(dupl$gid, "_D")
-  df_new <- rbind(df, dupl) # merge picked samples with orign dataframe
+  df_new <- rbind(df, dupl) # merge picked samples with origin dataframe
   
   nplates <- 16
   
@@ -115,12 +140,8 @@ for(ind in 1:nrep){
 summary(L[1:10])
 x <-as.data.frame(L[1])
 summary(x)
-?as.data.frame()
 
 lapply(L, quantile, probs = 1:3/4, n= TRUE)
-
-library(dplyr)
-
 
 x <- rep(0, nrep)
 for (i in 1:length(L)){
@@ -136,9 +157,10 @@ for (i in 1:length(L)){
 ind <- which.min(x)
 
 final <- L[[ind]]
-boxplot(final$age~final$newplate)
 
-# just sample for the loop
-for(col in df_new){
-  x <- c(x, sum(col))
-}
+pdf(file="01-Plasma_block_rand/DoF_corrected/corrected_plasma.pdf")
+boxplot(age~newplate,
+        data=final)
+dev.off()
+
+write.csv(final, "01-Plasma_block_rand/DoF_corrected/corrected_plasma.csv")
