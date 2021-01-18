@@ -6,6 +6,6 @@ The first project analyses the variance within the glycoproteins level measured 
 
 The second project investigates normalization technics for proteins separated on the 2D gels.
 
-The third project explores the sources of variation in stability of IgG and the level of glycoproteins (areas-20141202.csv).
+The third project explores the sources of variation in stability of IgG and the level of glycoproteins.
 
 Finally, the developed and tested normalisation functions are collected together in normalization_functions_23062015.R
